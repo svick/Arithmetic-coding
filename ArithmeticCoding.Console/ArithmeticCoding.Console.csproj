@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>f5e05992-4266-400b-87b5-1254d234e456</ProjectGuid>
+    <ProjectGuid>{150F4438-0D4D-4E3F-9607-01C3D9DF4DB2}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ArithmeticCoding.Console</RootNamespace>
@@ -45,6 +45,12 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArithmeticCoding\ArithmeticCoding.csproj">
+      <Project>{F61BA6E7-FBE8-458B-94C6-26F556F20F4F}</Project>
+      <Name>ArithmeticCoding</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

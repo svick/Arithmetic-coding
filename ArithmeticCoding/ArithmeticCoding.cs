@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 
 namespace ArithmeticCoding
 {
@@ -6,12 +6,24 @@ namespace ArithmeticCoding
     {
         public static void Compress(string inputFile, string outputFile)
         {
-            throw new NotImplementedException();
+            var coder = new Coder();
+
+            using (var reader = File.OpenRead(inputFile))
+            using (var writer = new BitWriter(outputFile))
+            {
+                coder.Encode(reader, writer);
+            }
         }
 
         public static void Decompress(string inputFile, string outputFile)
         {
-            throw new NotImplementedException();
+            var decoder = new Decoder();
+
+            using (var reader = new BitReader(inputFile))
+            using (var writer = File.OpenWrite(outputFile))
+            {
+                decoder.Decode(reader, writer);
+            }
         }
     }
 }

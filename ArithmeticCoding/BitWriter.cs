@@ -23,9 +23,7 @@ namespace ArithmeticCoding
 
         byte DequeueByte()
         {
-            byte result = (byte)(m_bits & byte.MaxValue);
-
-            m_bits >>= 8;
+            byte result = (byte)(m_bits >> (m_bitsCount - 8));
 
             m_bitsCount -= Math.Min(8, m_bitsCount);
 
@@ -34,7 +32,7 @@ namespace ArithmeticCoding
 
         public void Write(bool bit)
         {
-            m_bits |= (bit ? 1U : 0U) << m_bitsCount;
+            m_bits = m_bits << 1 | (bit ? 1U : 0U);
 
             m_bitsCount += 1;
 
@@ -43,51 +41,17 @@ namespace ArithmeticCoding
 
         public void Write(byte value)
         {
-            m_bits |= (uint)(value << m_bitsCount);
+            m_bits = m_bits << 8 | value;
 
             m_bitsCount += 8;
 
             Flush();
         }
 
-        public void Write(uint value, int bitCount)
-        {
-            value = value & ((1U << bitCount) - 1);
-
-            if (m_bitsCount + bitCount <= 32)
-            {
-                m_bits |= value << m_bitsCount;
-
-                m_bitsCount += bitCount;
-            }
-            else
-            {
-                Write(value, 16);
-                Write(value >> 16, bitCount - 16);
-            }
-
-            Flush();
-        }
-
         public void Write(ulong value)
         {
-            Write(value, 64);
-        }
-
-        public void Write(ulong value, int bitCount)
-        {
-            value = value & ((1UL << bitCount) - 1);
-
-            while (bitCount > 16)
-            {
-                Write((uint)value, 16);
-
-                bitCount -= 16;
-
-                value >>= 16;
-            }
-
-            Write((uint)value, bitCount);
+            for (int i = 7; i >= 0; i--)
+                Write((byte)(value >> i * 8));
         }
 
         private void Flush()

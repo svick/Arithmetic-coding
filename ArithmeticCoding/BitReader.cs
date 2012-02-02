@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 
 namespace ArithmeticCoding
 {
@@ -53,6 +54,8 @@ namespace ArithmeticCoding
                 read = m_stream.Read(bytes, offset, bytes.Length - offset);
                 offset += read;
             } while (read != 0 && offset < bytes.Length);
+
+            Array.Reverse(bytes);
 
             return BitConverter.ToUInt64(bytes, 0);
         }

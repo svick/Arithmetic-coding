@@ -1,12 +1,16 @@
 ﻿using System;
 using System.IO;
+using log4net;
 
 namespace ArithmeticCoding
 {
     class Coder
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Coder));
+
         private static readonly ulong Quarter = ulong.MaxValue / 4;
         private static readonly ulong Half = ulong.MaxValue / 2;
+        private static readonly ulong LogConstant = 1;// 1000000000000000;
 
         private BitWriter m_writer;
 
@@ -39,6 +43,8 @@ namespace ArithmeticCoding
                 m_length++;
             }
 
+            Log.DebugFormat("Coding file writh {0} bytes.", m_length);
+
             m_writer.Write(m_length);
 
             for (int i = 0; i < m_byteCounts.Length; i++)
@@ -70,10 +76,16 @@ namespace ArithmeticCoding
 
         private void EncodeByte(byte b)
         {
+            Log.DebugFormat("Coding byte 0x{0:X}.", b);
+
             ulong rangeUnit = m_range / m_length;
 
             ulong byteCumulatedCount = m_byteCounts[b];
             ulong previousByteCumultedCount = b == 0 ? 0 : m_byteCounts[b - 1];
+
+            Log.DebugFormat(
+                "D={0}; R={1}; r={2}; mz={3}; mz-1={4}",
+                m_low / LogConstant, m_range / LogConstant, rangeUnit, byteCumulatedCount, previousByteCumultedCount);
 
             m_low += rangeUnit * previousByteCumultedCount;
 
@@ -81,6 +93,8 @@ namespace ArithmeticCoding
                 m_range = rangeUnit * (byteCumulatedCount - previousByteCumultedCount);
             else
                 m_range = m_range - rangeUnit * previousByteCumultedCount;
+
+            Log.DebugFormat("D={0}; R={1}", m_low / LogConstant, m_range / LogConstant);
 
             while (m_range < Quarter)
             {
@@ -93,21 +107,29 @@ namespace ArithmeticCoding
                 }
                 else
                 {
+                    Log.Debug("Incrementing counter of delayed bits.");
+
                     m_counter++;
                     m_low -= Quarter;
                 }
 
                 m_low *= 2;
                 m_range *= 2;
+
+                Log.DebugFormat("D={0}; R={1}", m_low / LogConstant, m_range / LogConstant);
             }
         }
 
         private void OutputBit(bool bit)
         {
+            Log.DebugFormat("Writing bit {0}.", Convert.ToInt32(bit));
+
             m_writer.Write(bit);
 
             while (m_counter > 0)
             {
+                Log.DebugFormat("Writing delayed bit {0}.", Convert.ToInt32(!bit));
+
                 m_writer.Write(!bit);
                 m_counter--;
             }

@@ -50,6 +50,7 @@
     <Compile Include="Coder.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Decoder.cs" />
+    <Compile Include="Elias.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

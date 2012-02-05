@@ -40,23 +40,7 @@ namespace ArithmeticCoding
 
         public ulong ReadUInt64()
         {
-            if (m_bitsRead != 8)
-                throw new InvalidOperationException();
-
-            byte[] bytes = new byte[8];
-
-            int offset = 0;
-
-            int read;
-            do
-            {
-                read = m_stream.Read(bytes, offset, bytes.Length - offset);
-                offset += read;
-            } while (read != 0 && offset < bytes.Length);
-
-            Array.Reverse(bytes);
-
-            return BitConverter.ToUInt64(bytes, 0);
+            return Elias.GammaDecode(this);
         }
 
         public void Dispose()

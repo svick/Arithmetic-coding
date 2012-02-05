@@ -49,8 +49,7 @@ namespace ArithmeticCoding
 
         public void Write(ulong value)
         {
-            for (int i = 7; i >= 0; i--)
-                Write(unchecked((byte)(value >> i * 8)));
+            Elias.GammaCode(value, this);
         }
 
         private void Flush()

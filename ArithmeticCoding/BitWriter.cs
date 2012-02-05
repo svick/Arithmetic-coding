@@ -22,7 +22,7 @@ namespace ArithmeticCoding
 
         byte DequeueByte()
         {
-            byte result = (byte)(m_bits >> (m_bitsCount - 8));
+            byte result = unchecked((byte)(m_bits >> (m_bitsCount - 8)));
 
             m_bitsCount -= Math.Min(8, m_bitsCount);
 
@@ -50,7 +50,7 @@ namespace ArithmeticCoding
         public void Write(ulong value)
         {
             for (int i = 7; i >= 0; i--)
-                Write((byte)(value >> i * 8));
+                Write(unchecked((byte)(value >> i * 8)));
         }
 
         private void Flush()

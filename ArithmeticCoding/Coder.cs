@@ -94,7 +94,8 @@ namespace ArithmeticCoding
 
             while (m_range <= Constants.Quarter)
             {
-                if (m_low + m_range <= Constants.Half)
+                // additional checking to avoid overflow
+                if (m_low <= Constants.Half && m_range <= Constants.Half && m_low + m_range <= Constants.Half)
                     OutputBit(false);
                 else if (m_low >= Constants.Half)
                 {

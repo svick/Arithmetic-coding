@@ -58,16 +58,14 @@ namespace ArithmeticCoding
                     "D={0}; R={1}; r={2}; target={3}",
                     m_low / Constants.LogConstant, m_range / Constants.LogConstant, rangeUnit, target);
 
-                byte b = 0;
+                int pos = Array.BinarySearch(m_byteCounts, target);
 
-                for (byte j = 0; j < m_byteCounts.Length; j++)
-                {
-                    if (target < m_byteCounts[j])
-                    {
-                        b = j;
-                        break;
-                    }
-                }
+                byte b;
+
+                if (pos >= 0)
+                    b = (byte)(pos + 1);
+                else
+                    b = (byte)(~pos);
 
                 Log.DebugFormat("Writing byte 0x{0:X2}.", b);
 

@@ -8,10 +8,6 @@ namespace ArithmeticCoding
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Coder));
 
-        private static readonly ulong Quarter = 1UL << 61;
-        private static readonly ulong Half = 1UL << 62;
-        private static readonly ulong LogConstant = 1000000000000000;
-
         private BitWriter m_writer;
 
         private ulong m_low;
@@ -57,7 +53,7 @@ namespace ArithmeticCoding
             }
 
             m_low = 0;
-            m_range = Half;
+            m_range = Constants.Half;
             m_counter = 0;
 
             reader.Position = 0;
@@ -67,7 +63,7 @@ namespace ArithmeticCoding
                 EncodeByte((byte)b);
             }
 
-            for (int i = 63; i >= 0; i--)
+            for (int i = Constants.BitsUsed; i >= 0; i--)
             {
                 bool bit = ((1UL << i) & m_low) != 0;
                 OutputBit(bit);
@@ -85,7 +81,7 @@ namespace ArithmeticCoding
 
             Log.DebugFormat(
                 "D={0}; R={1}; r={2}; mz={3}; mz-1={4}",
-                m_low / LogConstant, m_range / LogConstant, rangeUnit, byteCumulatedCount, previousByteCumultedCount);
+                m_low / Constants.LogConstant, m_range / Constants.LogConstant, rangeUnit, byteCumulatedCount, previousByteCumultedCount);
 
             m_low += rangeUnit * previousByteCumultedCount;
 
@@ -94,29 +90,29 @@ namespace ArithmeticCoding
             else
                 m_range = m_range - rangeUnit * previousByteCumultedCount;
 
-            Log.DebugFormat("D={0}; R={1}", m_low / LogConstant, m_range / LogConstant);
+            Log.DebugFormat("D={0}; R={1}", m_low / Constants.LogConstant, m_range / Constants.LogConstant);
 
-            while (m_range <= Quarter)
+            while (m_range <= Constants.Quarter)
             {
-                if (m_low + m_range <= Half)
+                if (m_low + m_range <= Constants.Half)
                     OutputBit(false);
-                else if (m_low >= Half)
+                else if (m_low >= Constants.Half)
                 {
                     OutputBit(true);
-                    m_low -= Half;
+                    m_low -= Constants.Half;
                 }
                 else
                 {
                     Log.Debug("Incrementing counter of delayed bits.");
 
                     m_counter++;
-                    m_low -= Quarter;
+                    m_low -= Constants.Quarter;
                 }
 
                 m_low *= 2;
                 m_range *= 2;
 
-                Log.DebugFormat("D={0}; R={1}", m_low / LogConstant, m_range / LogConstant);
+                Log.DebugFormat("D={0}; R={1}", m_low / Constants.LogConstant, m_range / Constants.LogConstant);
             }
         }
 

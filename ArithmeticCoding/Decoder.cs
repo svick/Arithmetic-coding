@@ -8,10 +8,6 @@ namespace ArithmeticCoding
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Decoder));
 
-        private static readonly ulong Quarter = 1UL << 61;
-        private static readonly ulong Half = 1UL << 62;
-        private static readonly ulong LogConstant = 1000000000000000;
-
         private BitReader m_reader;
 
         private ulong m_low;
@@ -44,8 +40,8 @@ namespace ArithmeticCoding
                     m_byteCounts[i] += m_byteCounts[i - 1];
             }
 
-            m_range = Half;
-            for (int i = 0; i < 63; i++)
+            m_range = Constants.Half;
+            for (int i = 0; i < Constants.BitsUsed; i++)
             {
                 m_low = (m_low << 1) + Convert.ToUInt64(m_reader.ReadBit());
             }
@@ -60,7 +56,7 @@ namespace ArithmeticCoding
 
                 Log.DebugFormat(
                     "D={0}; R={1}; r={2}; target={3}",
-                    m_low / LogConstant, m_range / LogConstant, rangeUnit, target);
+                    m_low / Constants.LogConstant, m_range / Constants.LogConstant, rangeUnit, target);
 
                 byte b = 0;
 
@@ -97,9 +93,9 @@ namespace ArithmeticCoding
             else
                 m_range -= rangeUnit * previousByteCumultedCount;
 
-            Log.DebugFormat("D={0}; R={1}", m_low / LogConstant, m_range / LogConstant);
+            Log.DebugFormat("D={0}; R={1}", m_low / Constants.LogConstant, m_range / Constants.LogConstant);
 
-            while (m_range <= Quarter)
+            while (m_range <= Constants.Quarter)
             {
                 m_range *= 2;
                 m_low *= 2;
@@ -112,7 +108,7 @@ namespace ArithmeticCoding
                     Log.Debug("Read bit 0.");
             }
 
-            Log.DebugFormat("D={0}; R={1}", m_low / LogConstant, m_range / LogConstant);
+            Log.DebugFormat("D={0}; R={1}", m_low / Constants.LogConstant, m_range / Constants.LogConstant);
         }
     }
 }

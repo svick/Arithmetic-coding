@@ -47,6 +47,7 @@
     <Compile Include="BitReader.cs" />
     <Compile Include="BitWriter.cs" />
     <Compile Include="Coder.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Decoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

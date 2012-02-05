@@ -63,7 +63,7 @@ namespace ArithmeticCoding
                 EncodeByte((byte)b);
             }
 
-            for (int i = Constants.BitsUsed; i >= 0; i--)
+            for (int i = Constants.BitsUsed - 1; i >= 0; i--)
             {
                 bool bit = ((1UL << i) & m_low) != 0;
                 OutputBit(bit);

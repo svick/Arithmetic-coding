@@ -20,7 +20,7 @@ namespace ArithmeticCoding
             var decoder = new Decoder();
 
             using (var reader = new BitReader(inputFile))
-            using (var writer = File.OpenWrite(outputFile))
+            using (var writer = new FileStream(outputFile, FileMode.Create))
             {
                 decoder.Decode(reader, writer);
             }

@@ -8,8 +8,8 @@ namespace ArithmeticCoding
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Coder));
 
-        private static readonly ulong Quarter = ulong.MaxValue / 4;
-        private static readonly ulong Half = ulong.MaxValue / 2;
+        private static readonly ulong Quarter = 4096;// ulong.MaxValue / 4;
+        private static readonly ulong Half = 8192;// ulong.MaxValue / 2;
         private static readonly ulong LogConstant = 1;// 1000000000000000;
 
         private BitWriter m_writer;

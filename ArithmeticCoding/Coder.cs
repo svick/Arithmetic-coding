@@ -8,9 +8,9 @@ namespace ArithmeticCoding
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Coder));
 
-        private static readonly ulong Quarter = 4096;// ulong.MaxValue / 4;
-        private static readonly ulong Half = 8192;// ulong.MaxValue / 2;
-        private static readonly ulong LogConstant = 1;// 1000000000000000;
+        private static readonly ulong Quarter = 1UL << 61;
+        private static readonly ulong Half = 1UL << 62;
+        private static readonly ulong LogConstant = 1000000000000000;
 
         private BitWriter m_writer;
 
@@ -67,9 +67,9 @@ namespace ArithmeticCoding
                 EncodeByte((byte)b);
             }
 
-            for (int i = 0; i < 64; i++)
+            for (int i = 63; i >= 0; i--)
             {
-                bool bit = ((1UL << i) & m_low) == 1;
+                bool bit = ((1UL << i) & m_low) != 0;
                 OutputBit(bit);
             }
         }

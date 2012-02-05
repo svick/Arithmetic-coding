@@ -26,7 +26,7 @@ namespace ArithmeticCoding
             {
                 int read = m_stream.ReadByte();
                 if (read == -1)
-                    throw new InvalidOperationException();
+                    return false;
 
                 m_bits = (byte)read;
                 m_bitsRead = 0;

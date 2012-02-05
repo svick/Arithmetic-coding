@@ -1,10 +1,8 @@
 using System;
 using System.IO;
-using System.Linq;
 
 namespace ArithmeticCoding
 {
-    // TODO: go over this code to make sure it works correctly
     class BitReader : IDisposable
     {
         private readonly Stream m_stream;
@@ -34,8 +32,9 @@ namespace ArithmeticCoding
                 m_bitsRead = 0;
             }
 
-            bool result = (m_bits & 1 << m_bitsRead) != 0;
+            bool result = (m_bits & 1 << (7 - m_bitsRead)) != 0;
             m_bitsRead++;
+
             return result;
         }
 

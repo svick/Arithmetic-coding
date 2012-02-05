@@ -96,7 +96,7 @@ namespace ArithmeticCoding
 
             Log.DebugFormat("D={0}; R={1}", m_low / LogConstant, m_range / LogConstant);
 
-            while (m_range < Quarter)
+            while (m_range <= Quarter)
             {
                 if (m_low + m_range <= Half)
                     OutputBit(false);

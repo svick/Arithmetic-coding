@@ -3,7 +3,6 @@ using System.IO;
 
 namespace ArithmeticCoding
 {
-    // TODO: go over this code to make sure it works correctly
     class BitWriter : IDisposable
     {
         private readonly Stream m_stream;

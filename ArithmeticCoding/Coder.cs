@@ -76,7 +76,7 @@ namespace ArithmeticCoding
 
         private void EncodeByte(byte b)
         {
-            Log.DebugFormat("Coding byte 0x{0:X}.", b);
+            Log.DebugFormat("Coding byte 0x{0:X2}.", b);
 
             ulong rangeUnit = m_range / m_length;
 

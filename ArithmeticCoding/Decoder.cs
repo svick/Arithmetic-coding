@@ -73,7 +73,7 @@ namespace ArithmeticCoding
                     }
                 }
 
-                Log.DebugFormat("Writing byte 0x{0:X}.", b);
+                Log.DebugFormat("Writing byte 0x{0:X2}.", b);
 
                 writer.WriteByte(b);
 
